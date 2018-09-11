@@ -1,4 +1,6 @@
 // Enemies our player must avoid
+var win = 0;
+var loose = 0;
 var Enemy = function(x,y,speed) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
@@ -24,10 +26,12 @@ Enemy.prototype.update = function(dt) {
     //handle collision with player,
     //player = x + offset enemy x=> collide; x player + offset < enemy -> enemy already forward
     if (this.x + 40 > player.x && this.x < player.x + 30 && this.y + 30 > player.y) {
+        loose++;
         console.log(this.x, player.x);
         console.log(this.y, player.y);
         player.x = 200;
         player.y = 350;
+        $("#loose").text(loose);
     }
 };
 
@@ -49,6 +53,7 @@ var Player = function(x, y, speed) {
     
 }
 
+
 //update method
 Player.prototype.update = function() {
     //check over boundary
@@ -60,6 +65,9 @@ Player.prototype.update = function() {
         this.y = 400;
     } else if (this.y < 50) {
         this.y = 300;
+        win++;
+        $("#win").text(win);
+
     }
 };
 
@@ -86,12 +94,22 @@ Player.prototype.handleInput = function(key) {
     }
 }
 
+//handle reset
+$("button").on("click", function(){
+    console.log("test");
+    loose = 0;
+    win = 0;
+    $("#win").text(win);
+    $("#loose").text(loose);
+    
+})
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 // var player = new Player(200, 200, 20);
 var allEnemies = [];
-var player = new Player(200, 350, 100);
+var player = new Player(200, 350, 0);
 
 function createEnemy() {
         var enemy1 = new Enemy(0, 50, (Math.random() + 1) * 100);
@@ -115,3 +133,7 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+//button reset game
+
+
