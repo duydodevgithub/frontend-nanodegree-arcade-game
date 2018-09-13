@@ -25,7 +25,7 @@ Enemy.prototype.update = function(dt) {
 
     //handle collision with player,
     //player = x + offset enemy x=> collide; x player + offset < enemy -> enemy already forward
-    if (this.x + 40 > player.x && this.x < player.x + 30 && this.y + 30 > player.y) {
+    if (this.x + 60 > player.x && this.x < player.x + 30 && this.y + 10 > player.y ) {
         loose++;
         console.log(this.x, player.x);
         console.log(this.y, player.y);
@@ -57,17 +57,20 @@ var Player = function(x, y, speed) {
 //update method
 Player.prototype.update = function() {
     //check over boundary
-    if(this.x > 500) {
-        this.x = 0;
+    if(this.x > 430) {
+        this.x = 430;
     } else if (this.x < 0){
-        this.x = 500;
-    } else if (this.y > 500) {
-        this.y = 400;
-    } else if (this.y < 50) {
-        this.y = 300;
+        this.x = 0;
+    } else if (this.y > 430) {
+        this.y = 450;
+    } else if (this.y < 30) {
+        this.y = 350;
         win++;
-        $("#win").text(win);
-
+        $("#win2").text(win);
+        $("#win").css("visibility", "visible");
+        setTimeout(function(){
+            $("#win").css("visibility", "hidden");
+        }, 500);
     }
 };
 
@@ -100,7 +103,7 @@ $("button").on("click", function(){
     loose = 0;
     win = 0;
     $("#win").text(win);
-    $("#loose").text(loose);
+    $("#loose2").text(loose);
     
 })
 
@@ -112,11 +115,11 @@ var allEnemies = [];
 var player = new Player(200, 350, 0);
 
 function createEnemy() {
-        var enemy1 = new Enemy(0, 50, (Math.random() + 1) * 100);
+        var enemy1 = new Enemy(0, 50, (Math.random() + 1) * 50);
         allEnemies.push(enemy1);
-        var enemy2 = new Enemy(0, 130, (Math.random() + 1) * 100);
+        var enemy2 = new Enemy(0, 135, (Math.random() + 1) * 50);
         allEnemies.push(enemy2);
-        var enemy3 = new Enemy(0, 200, (Math.random() + 1) * 100);
+        var enemy3 = new Enemy(0, 220, (Math.random() + 1) * 50);
         allEnemies.push(enemy3);
 }
 createEnemy();
